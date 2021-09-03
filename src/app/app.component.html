@@ -1,0 +1,8 @@
+<div *ngFor="let item of users"><b>{{ item.id }}:</b> {{ item.name }}</div>
+<br>
+<label>Nome</label>
+<br>
+<input type="text" [(ngModel)]="user.name">
+<br>
+
+<button (click)="setUser()">Salvar</button>
