@@ -15,35 +15,42 @@ export class AppComponent implements OnInit {
   constructor(private webSocketService: WebSocketService) {}
 
   ngOnInit() {
-    this.myUser();
-    this.myRoom();
     this.newUser();
+    this.myUser();
+    this.allUsers();
   }
 
   setUser() {
     this.webSocketService.emit('setUser', this.user);
   }
 
-  myUser() {
-    this.webSocketService.listen('myUser').subscribe((data) => {
-      this.users.push(data);
-      console.log('myUser', data);
-    });
-  }
-
-  myRoom() {
-    this.webSocketService.listen('myRoom').subscribe((data:any) => {
-      for (const user of data) {
-        this.users.push(user);
-      }
-      console.log('myRoom', data);
-    });
-  }
-
   newUser() {
     this.webSocketService.listen('newUser').subscribe((data) => {
       this.users.push(data);
       console.log('newUser', data);
+    });
+  }
+
+  myUser() {
+    this.webSocketService.listen('myUser').subscribe((data) => {
+      this.users.push(data);
+      localStorage.setItem('user', JSON.stringify(data));
+
+      // var storedNames = JSON.parse(<string>localStorage.getItem('user'));
+      console.log('myUser', data);
+    });
+  }
+
+  delete() {
+    var user = JSON.parse(<string>localStorage.getItem('user'));
+    console.log(user.id);
+
+    this.webSocketService.emit('delete', user.id);
+  }
+
+  allUsers() {
+    this.webSocketService.listen('allUsers').subscribe((data) => {
+      console.log('allUsers', data);
     });
   }
 }
