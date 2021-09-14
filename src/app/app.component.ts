@@ -18,22 +18,43 @@ export class AppComponent implements OnInit {
   constructor(private webSocketService: WebSocketService) {}
 
   ngOnInit() {
-    this.newUser();
+    this.checkUserExist();
+
+    this.myId();
+    this.room();
+    this.myName();
+    this.userName();
     this.myUser();
-    this.allUsers();
+    this.newUser();
     this.userDeleted();
     this.myDelete();
     this.userUpdated();
     this.myUpdate();
     this.showAll();
     this.showMe();
-    this.resetAll();
     this.resetMe();
+    this.resetAll();
+    this.allUsers();
   }
 
   // EMIT
-  setUser() {
-    this.webSocketService.emit('setUser', this.user);
+  generateId() {
+    this.webSocketService.emit('generateId', []);
+  }
+
+  setName() {
+    this.webSocketService.emit('setName', this.user);
+  }
+
+  checkUserExist() {
+    var user = JSON.parse(<string>localStorage.getItem('user')) ?? null;
+
+    if (user != null) {
+      console.log(user);
+      this.webSocketService.emit('checkUserExist', user.id);
+    } else {
+      this.generateId();
+    }
   }
 
   setValue() {
@@ -62,20 +83,56 @@ export class AppComponent implements OnInit {
   }
 
   // LISTEN
-  newUser() {
-    this.webSocketService.listen('newUser').subscribe((data) => {
-      this.users.push(data);
-      console.log('newUser', data);
+  myId() {
+    this.webSocketService.listen('myId').subscribe((data: any) => {
+      localStorage.setItem('user', JSON.stringify(data));
+
+      this.user = data;
+    });
+  }
+
+  room() {
+    this.webSocketService.listen('room').subscribe((data: any) => {
+      for (const user of data) {
+        this.users.push(user);
+      }
+    });
+  }
+
+  myName() {
+    this.webSocketService.listen('myName').subscribe((data: any) => {
+      this.user.name = data.name;
+      var objIndex = this.users.findIndex(((obj: any) => obj.id == data.id));
+
+      this.users[objIndex].name = data.name;
+    });
+  }
+
+  userName() {
+    this.webSocketService.listen('userName').subscribe((data: any) => {
+      var objIndex = this.users.findIndex(((obj: any) => obj.id == data.id));
+
+      this.users[objIndex].name = data.name;
     });
   }
 
   myUser() {
-    this.webSocketService.listen('myUser').subscribe((data) => {
-      this.users.push(data);
-      localStorage.setItem('user', JSON.stringify(data));
-
-      this.user = JSON.parse(<string>localStorage.getItem('user'));
+    this.webSocketService.listen('myUser').subscribe((data: any) => {
       console.log('myUser', data);
+
+      if (data != null) {
+        this.user = data
+
+        localStorage.setItem('user', JSON.stringify(this.user));
+      } else {
+        this.generateId();
+      }
+    });
+  }
+
+  newUser() {
+    this.webSocketService.listen('newUser').subscribe((data) => {
+      this.users.push(data);
     });
   }
 

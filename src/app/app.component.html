@@ -1,17 +1,13 @@
+<label>Nome: </label>
+<input type="text" [(ngModel)]="user.name">
+<button (click)="setName()">Salvar</button>
+<button (click)="delete()">excluir</button>
+<br>
+
 <div *ngFor="let item of users"><b>{{ item.id }}:</b> {{ item.name }} | {{ item.value }} | {{ item.selected }}</div>
 
 <br>
-<label>Nome</label>
-<br>
-<input type="text" [(ngModel)]="user.name">
-<br>
-
-<button (click)="setUser()">Salvar</button>
-<button (click)="delete()">excluir</button>
-
-<br>
-<label>value</label>
-<br>
+<label>Valor: </label>
 <input type="text" [(ngModel)]="user.value">
 <button (click)="setValue()">Enviar</button>
 
