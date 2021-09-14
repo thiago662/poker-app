@@ -1,4 +1,5 @@
-<div *ngFor="let item of users"><b>{{ item.id }}:</b> {{ item.name }}</div>
+<div *ngFor="let item of users"><b>{{ item.id }}:</b> {{ item.name }} | {{ item.value }} | {{ item.selected }}</div>
+
 <br>
 <label>Nome</label>
 <br>
@@ -7,3 +8,14 @@
 
 <button (click)="setUser()">Salvar</button>
 <button (click)="delete()">excluir</button>
+
+<br>
+<label>value</label>
+<br>
+<input type="text" [(ngModel)]="user.value">
+<button (click)="setValue()">Enviar</button>
+
+<br>
+<button (click)="show()">Mostra tudo</button>
+<br>
+<button (click)="reset()">reset</button>
