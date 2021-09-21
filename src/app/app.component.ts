@@ -14,27 +14,28 @@ export class AppComponent implements OnInit {
     value: '',
     selected: false
   };
+  isDivVisible = true;
 
   constructor(private webSocketService: WebSocketService) {}
 
   ngOnInit() {
-    this.checkUserExist();
+    // this.checkUserExist();
 
-    this.myId();
-    this.room();
-    this.myName();
-    this.userName();
-    this.myUser();
-    this.newUser();
-    this.userDeleted();
-    this.myDelete();
-    this.userUpdated();
-    this.myUpdate();
-    this.showAll();
-    this.showMe();
-    this.resetMe();
-    this.resetAll();
-    this.allUsers();
+    // this.myId();
+    // this.room();
+    // this.myName();
+    // this.userName();
+    // this.myUser();
+    // this.newUser();
+    // this.userDeleted();
+    // this.myDelete();
+    // this.userUpdated();
+    // this.myUpdate();
+    // this.showAll();
+    // this.showMe();
+    // this.resetMe();
+    // this.resetAll();
+    // this.allUsers();
   }
 
   // EMIT
@@ -50,7 +51,6 @@ export class AppComponent implements OnInit {
     var user = JSON.parse(<string>localStorage.getItem('user')) ?? null;
 
     if (user != null) {
-      console.log(user);
       this.webSocketService.emit('checkUserExist', user.id);
     } else {
       this.generateId();
@@ -58,33 +58,27 @@ export class AppComponent implements OnInit {
   }
 
   setValue() {
-    console.log('setValue', this.user);
-
     this.webSocketService.emit('setValue', this.user);
   }
 
   delete() {
     var user = JSON.parse(<string>localStorage.getItem('user'));
-    console.log('delete', user.id);
 
     this.webSocketService.emit('delete', user.id);
   }
 
   show() {
-    console.log('show');
-
     this.webSocketService.emit('show', []);
   }
 
   reset() {
-    console.log('reset');
-
     this.webSocketService.emit('reset', []);
   }
 
   // LISTEN
   myId() {
     this.webSocketService.listen('myId').subscribe((data: any) => {
+      console.log('myId', data);
       localStorage.setItem('user', JSON.stringify(data));
 
       this.user = data;
@@ -93,6 +87,7 @@ export class AppComponent implements OnInit {
 
   room() {
     this.webSocketService.listen('room').subscribe((data: any) => {
+      console.log('room', data);
       for (const user of data) {
         this.users.push(user);
       }
@@ -101,6 +96,7 @@ export class AppComponent implements OnInit {
 
   myName() {
     this.webSocketService.listen('myName').subscribe((data: any) => {
+      console.log('myName', data);
       this.user.name = data.name;
       var objIndex = this.users.findIndex(((obj: any) => obj.id == data.id));
 
@@ -110,6 +106,7 @@ export class AppComponent implements OnInit {
 
   userName() {
     this.webSocketService.listen('userName').subscribe((data: any) => {
+      console.log('userName', data);
       var objIndex = this.users.findIndex(((obj: any) => obj.id == data.id));
 
       this.users[objIndex].name = data.name;
@@ -132,6 +129,7 @@ export class AppComponent implements OnInit {
 
   newUser() {
     this.webSocketService.listen('newUser').subscribe((data) => {
+      console.log('newUser', data);
       this.users.push(data);
     });
   }
