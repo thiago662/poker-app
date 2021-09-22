@@ -1,151 +1,45 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
-      <a class="navbar-brand">Navbar</a>
-      <form class="d-flex">
-          <span class="navbar-text me-3">
-              Thiago
-          </span>
-          <!-- <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search"> -->
-          <button class="btn btn-outline-success rounded-circle" type="submit"><i class="fas fa-pencil-alt"></i></button>
-          <!-- <button class="btn btn-outline-success rounded-circle" type="submit"><i class="fas fa-check"></i></button> -->
-      </form>
+    <a class="navbar-brand">Poker</a>
+    <div class="d-flex">
+      <span class="navbar-text mx-3" *ngIf="!isEditing">
+        {{ user.name }}
+      </span>
+      <input class="form-control mx-3" type="text" [(ngModel)]="user.name" *ngIf="isEditing">
+      <button class="btn rounded-circle" (click)="editName()"
+        [ngClass]="!isEditing == true ? 'btn-outline-success' : 'btn-success'">
+        <i class="fas" [ngClass]="!isEditing == true ? 'fa-pencil-alt' : 'fa-check'"></i>
+      </button>
+    </div>
   </div>
 </nav>
-<!-- <div class="container d-flex justify-content-center"> -->
-<div class="container d-flex justify-content-around">
-<!-- <div class="container d-flex justify-content-evenly"> -->
-  <!-- <div>
+<div>
+  <div class="container d-flex justify-content-around align-items-center" style="height: 750px;">
+    <div *ngFor="let item of users">
       <div class="card">
-          <img src="C:\Users\thiago.santos\Downloads\bagre.jpg" alt="?" height="64" width="46">
-          <div class="card-body">
-              <h5 class="card-title">?</h5>
-          </div>
+        <img
+          src="https://imageproxy.ifunny.co/resize:320x,crop:x800,quality:90x75/images/f440c65f69699e2437cf014891de9076139fda4868f1d8a40521d3667c2fab8f_3.jpg"
+          alt="?" height="64" width="46" *ngIf="!isVisible && !item.selected">
+        <img src="https://c.tenor.com/dfhv9fs9AnEAAAAd/levanta-rafael-an%C3%A3o-caindo.gif" alt="?" height="64"
+          width="46" *ngIf="!isVisible && item.selected">
+        <div class="card-body" *ngIf="isVisible">
+          <h5 class="card-title">{{ item.value }}</h5>
+        </div>
       </div>
-      Thiago
-  </div> -->
-  <div>
-      <div class="card">
-          <img src="C:\Users\thiago.santos\Downloads\bagre.jpg" alt="?" height="64" width="46">
-      </div>
-      Thiago
-  </div>
-  <div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">?</h5>
-          </div>
-      </div>
-      Thiago
-  </div>
-  <div>
-      <div class="card">
-          <img src="C:\Users\thiago.santos\Downloads\bagre.jpg" alt="?" height="64" width="46">
-      </div>
-      Thiago
-  </div>
-  <div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">?</h5>
-          </div>
-      </div>
-      Thiago
-  </div>
-  <div>
-      <div class="card">
-          <img src="C:\Users\thiago.santos\Downloads\bagre.jpg" alt="?" height="64" width="46">
-      </div>
-      Thiago
-  </div>
-  <div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">?</h5>
-          </div>
-      </div>
-      Thiago
-  </div>
-  <div>
-      <div class="card">
-          <img src="C:\Users\thiago.santos\Downloads\bagre.jpg" alt="?" height="64" width="46">
-      </div>
-      Thiago
-  </div>
-  <div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">?</h5>
-          </div>
-      </div>
-      Thiago
+      {{ item.name }}
+    </div>
   </div>
 </div>
 <nav class="navbar fixed-bottom navbar-light bg-light">
-  <!-- <div class="container d-flex justify-content-center"> -->
+  <div class="container d-flex justify-content-center align-items-end">
+    <button class="btn btn-outline-success rounded-circle mx-1" (click)="show()"><i class="far fa-eye"></i></button>
+    <button class="btn btn-outline-success rounded-circle mx-1" (click)="reset()"><i class="fas fa-redo"></i></button>
+  </div>
   <div class="container d-flex justify-content-around">
-  <!-- <div class="container d-flex justify-content-evenly"> -->
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">?</h5>
-          </div>
+    <div *ngFor="let point of points" class="card" (click)="sendValue(point)">
+      <div class="card-body">
+        <h5 class="card-title">{{ point }}</h5>
       </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">0</h5>
-          </div>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">1</h5>
-          </div>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">2</h5>
-          </div>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">5</h5>
-          </div>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">8</h5>
-          </div>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">13</h5>
-          </div>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">21</h5>
-          </div>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">28</h5>
-          </div>
-      </div>
+    </div>
   </div>
 </nav>
-
-<!-- <label>Nome: </label>
-<input type="text" [(ngModel)]="user.name">
-<button (click)="setName()">Salvar</button>
-<button (click)="delete()">excluir</button>
-<br>
-
-<div *ngFor="let item of users"><b>{{ item.id }}:</b> {{ item.name }} | {{ item.value }} | {{ item.selected }}</div>
-
-<br>
-<label>Valor: </label>
-<input type="text" [(ngModel)]="user.value">
-<button (click)="setValue()">Enviar</button>
-
-<br>
-<button (click)="show()">Mostra tudo</button>
-<br>
-<button (click)="reset()">reset</button> -->

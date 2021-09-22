@@ -14,28 +14,44 @@ export class AppComponent implements OnInit {
     value: '',
     selected: false
   };
-  isDivVisible = true;
+  isVisible = false;
+  isEditing = true;
+  points = ['?', 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 
-  constructor(private webSocketService: WebSocketService) {}
+  constructor(private webSocketService: WebSocketService) { }
 
   ngOnInit() {
-    // this.checkUserExist();
+    this.checkUserExist();
 
-    // this.myId();
-    // this.room();
-    // this.myName();
-    // this.userName();
-    // this.myUser();
-    // this.newUser();
-    // this.userDeleted();
-    // this.myDelete();
-    // this.userUpdated();
-    // this.myUpdate();
-    // this.showAll();
-    // this.showMe();
-    // this.resetMe();
-    // this.resetAll();
-    // this.allUsers();
+    this.myId();
+    this.room();
+    this.myName();
+    this.userName();
+    this.myUser();
+    this.newUser();
+    this.userDeleted();
+    this.myDelete();
+    this.userUpdated();
+    this.myUpdate();
+    this.showAll();
+    this.showMe();
+    this.resetMe();
+    this.resetAll();
+    this.allUsers();
+  }
+
+  // EVENT
+  editName() {
+    if (this.isEditing) {
+      this.setName();
+    }
+
+    this.isEditing = !this.isEditing;
+  }
+
+  sendValue(value: any) {
+    this.user.value = value;
+    this.setValue();
   }
 
   // EMIT
@@ -137,8 +153,8 @@ export class AppComponent implements OnInit {
   userDeleted() {
     this.webSocketService.listen('userDeleted').subscribe((data) => {
       console.log('userDeleted', data);
-      this.users = this.users.filter(function(item: any) {
-          return item.id != data;
+      this.users = this.users.filter(function (item: any) {
+        return item.id != data;
       });
     });
   }
@@ -146,8 +162,8 @@ export class AppComponent implements OnInit {
   myDelete() {
     this.webSocketService.listen('myDelete').subscribe((data) => {
       console.log('myDelete', data);
-      this.users = this.users.filter(function(item: any) {
-          return item.id != data;
+      this.users = this.users.filter(function (item: any) {
+        return item.id != data;
       });
     });
   }
@@ -181,6 +197,8 @@ export class AppComponent implements OnInit {
 
         this.users[objIndex] = user;
       }
+
+      this.isVisible = true;
     });
   }
 
@@ -193,6 +211,8 @@ export class AppComponent implements OnInit {
 
         this.users[objIndex] = user;
       }
+
+      this.isVisible = true;
     });
   }
 
@@ -205,6 +225,8 @@ export class AppComponent implements OnInit {
 
         this.users[objIndex] = user;
       }
+
+      this.isVisible = false;
     });
   }
 
@@ -217,6 +239,8 @@ export class AppComponent implements OnInit {
 
         this.users[objIndex] = user;
       }
+
+      this.isVisible = false;
     });
   }
 
