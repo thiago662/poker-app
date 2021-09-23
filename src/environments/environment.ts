@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  websocket: 'https://poker-socket.herokuapp.com/'
+  websocket: 'ws://localhost:3000'
 };
 
 /*
