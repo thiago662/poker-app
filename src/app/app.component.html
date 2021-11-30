@@ -2,44 +2,56 @@
   <div class="container-fluid">
     <a class="navbar-brand">Poker</a>
     <div class="d-flex">
-      <span class="navbar-text mx-3" *ngIf="!isEditing">
+      <span class="navbar-text mx-3">
         {{ user.name }}
       </span>
-      <input class="form-control mx-3" type="text" [(ngModel)]="user.name" *ngIf="isEditing">
-      <button class="btn rounded-circle" (click)="editName()"
-        [ngClass]="!isEditing == true ? 'btn-outline-success' : 'btn-success'">
-        <i class="fas" [ngClass]="!isEditing == true ? 'fa-pencil-alt' : 'fa-check'"></i>
+      <button class="btn btn-outline-success rounded-circle" (click)="open(content)">
+        <i class="fas fa-pencil-alt"></i>
       </button>
     </div>
   </div>
 </nav>
+
 <div>
   <div class="container d-flex justify-content-around align-items-center" style="height: 750px;">
-    <div *ngFor="let item of users">
-      <div class="card">
-        <img
-          src="https://imageproxy.ifunny.co/resize:320x,crop:x800,quality:90x75/images/f440c65f69699e2437cf014891de9076139fda4868f1d8a40521d3667c2fab8f_3.jpg"
-          alt="?" height="64" width="46" *ngIf="!isVisible && !item.selected">
-        <img src="https://c.tenor.com/dfhv9fs9AnEAAAAd/levanta-rafael-an%C3%A3o-caindo.gif" alt="?" height="64"
-          width="46" *ngIf="!isVisible && item.selected">
+    <div *ngFor="let item of users" class="text-center d-flex flex-column align-items-center">
+      <div class="card" style="height: 90px; width: 70px;">
+        <img src="https://imageproxy.ifunny.co/resize:320x,crop:x800,quality:90x75/images/f440c65f69699e2437cf014891de9076139fda4868f1d8a40521d3667c2fab8f_3.jpg" alt="?" *ngIf="!isVisible && !item.selected" style="height: 90px; width: 70px;">
+        <img src="https://c.tenor.com/dfhv9fs9AnEAAAAd/levanta-rafael-an%C3%A3o-caindo.gif" alt="?" *ngIf="!isVisible && item.selected" style="height: 90px; width: 70px;">
         <div class="card-body" *ngIf="isVisible">
-          <h5 class="card-title">{{ item.value }}</h5>
+          <h4 class="card-title">{{ item.value }}</h4>
         </div>
       </div>
       {{ item.name }}
     </div>
   </div>
 </div>
+
 <nav class="navbar fixed-bottom navbar-light bg-light">
   <div class="container d-flex justify-content-center align-items-end">
     <button class="btn btn-outline-success rounded-circle mx-1" (click)="show()"><i class="far fa-eye"></i></button>
     <button class="btn btn-outline-success rounded-circle mx-1" (click)="reset()"><i class="fas fa-redo"></i></button>
   </div>
-  <div class="container d-flex justify-content-around">
-    <div *ngFor="let point of points" class="card" (click)="sendValue(point)">
+  <div class="container text-center d-flex justify-content-around">
+    <div *ngFor="let point of points" class="card" (click)="sendValue(point)" style="height: 90px; width: 70px;">
       <div class="card-body">
-        <h5 class="card-title">{{ point }}</h5>
+        <h4 class="card-title">{{ point }}</h4>
       </div>
     </div>
   </div>
 </nav>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar nome</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input class="form-control" type="text" [(ngModel)]="nameEdited">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close()" (click)="editName()">Salvar</button>
+  </div>
+</ng-template>
