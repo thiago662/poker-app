@@ -17,7 +17,57 @@ export class AppComponent implements OnInit {
   };
   isVisible = false;
   isEditing = true;
-  points = ['?', 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+  // points = ['?', 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+  points = [
+    {
+      value: '?',
+      selected: false
+    },
+    {
+      value: '0',
+      selected: false
+    },
+    {
+      value: '1',
+      selected: false
+    },
+    {
+      value: '2',
+      selected: false
+    },
+    {
+      value: '3',
+      selected: false
+    },
+    {
+      value: '5',
+      selected: false
+    },
+    {
+      value: '8',
+      selected: false
+    },
+    {
+      value: '13',
+      selected: false
+    },
+    {
+      value: '21',
+      selected: false
+    },
+    {
+      value: '34',
+      selected: false
+    },
+    {
+      value: '55',
+      selected: false
+    },
+    {
+      value: '89',
+      selected: false
+    },
+  ];
   nameEdited = '';
 
   constructor(
@@ -56,8 +106,15 @@ export class AppComponent implements OnInit {
     this.setName();
   }
 
+  // sendValue(value: any) {
+  //   this.user.value = value;
+  //   this.setValue();
+  // }
+
   sendValue(value: any) {
-    this.user.value = value;
+    this.user.value = value.value;
+    this.points.map(obj => obj.selected = false);
+    value.selected = true;
     this.setValue();
   }
 
@@ -95,6 +152,7 @@ export class AppComponent implements OnInit {
   }
 
   reset() {
+    this.points.map(obj => obj.selected = false);
     this.webSocketService.emit('reset', []);
   }
 
