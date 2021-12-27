@@ -16,7 +16,7 @@
 </nav>
 
 <div>
-  <div class="container d-flex justify-content-around align-items-center" style="height: 750px;">
+  <div class="container d-flex justify-content-sm-around align-items-center overflow-auto" style="height: 750px;">
     <div *ngFor="let item of users" class="text-center d-flex flex-column align-items-center">
       <div class="card border-5" style="height: 90px; width: 70px;" [ngClass]="!isVisible && !item.selected ? 'bg-light' : 'bg-dark'">
         <div class="card-body d-flex justify-content-around">
@@ -30,19 +30,21 @@
   </div>
 </div>
 
-<nav class="navbar fixed-bottom navbar-light bg-light">
-  <div class="container d-flex justify-content-center align-items-end">
+<footer class="text-center fixed-bottom">
+  <div class="container p-3">
     <button class="btn btn-outline-success rounded-circle mx-1" (click)="show()"><i class="far fa-eye"></i></button>
     <button class="btn btn-outline-success rounded-circle mx-1" (click)="reset()"><i class="fas fa-redo"></i></button>
   </div>
-  <div class="container text-center d-flex justify-content-around">
-    <div *ngFor="let point of points" class="card border-5" (click)="sendValue(point)" style="height: 90px; width: 70px;" [ngClass]="point.selected ? 'bg-dark text-light' : 'bg-light text-dark'">
-      <div class="card-body">
-        <h4 class="card-title">{{ point.value }}</h4>
+  <div class="bg-light p-3 overflow-auto">
+    <div class="container text-center d-flex justify-content-md-between">
+      <div *ngFor="let point of points" class="card border-5" (click)="sendValue(point)" style="height: 90px; min-width: 70px;" [ngClass]="point.selected ? 'bg-dark text-light' : 'bg-light text-dark'">
+        <div class="card-body">
+          <h4 class="card-title">{{ point.value }}</h4>
+        </div>
       </div>
     </div>
   </div>
-</nav>
+</footer>
 
 <ng-template #content let-modal>
   <div class="modal-content">
