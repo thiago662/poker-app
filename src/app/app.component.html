@@ -1,45 +1,60 @@
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand">Poker</a>
+<nav class="navbar navbar-light fixed-top bg-light">
+  <div class="container container-fluid">
+    <a class="navbar-brand">
+      <img src="./assets/poker-logo-preto.png" alt="LOGO" width="30" class="d-inline-block align-text-top">
+      Poker
+    </a>
     <div class="d-flex">
-      <span class="navbar-text mx-3" *ngIf="!isEditing">
+      <span class="navbar-text mx-3">
         {{ user.name }}
       </span>
-      <input class="form-control mx-3" type="text" [(ngModel)]="user.name" *ngIf="isEditing">
-      <button class="btn rounded-circle" (click)="editName()"
-        [ngClass]="!isEditing == true ? 'btn-outline-success' : 'btn-success'">
-        <i class="fas" [ngClass]="!isEditing == true ? 'fa-pencil-alt' : 'fa-check'"></i>
+      <button class="btn btn-outline-success rounded-circle" (click)="open(content)">
+        <i class="fas fa-pencil-alt"></i>
       </button>
     </div>
   </div>
 </nav>
+
 <div>
   <div class="container d-flex justify-content-around align-items-center" style="height: 750px;">
-    <div *ngFor="let item of users">
-      <div class="card">
-        <img
-          src="https://imageproxy.ifunny.co/resize:320x,crop:x800,quality:90x75/images/f440c65f69699e2437cf014891de9076139fda4868f1d8a40521d3667c2fab8f_3.jpg"
-          alt="?" height="64" width="46" *ngIf="!isVisible && !item.selected">
-        <img src="https://c.tenor.com/dfhv9fs9AnEAAAAd/levanta-rafael-an%C3%A3o-caindo.gif" alt="?" height="64"
-          width="46" *ngIf="!isVisible && item.selected">
-        <div class="card-body" *ngIf="isVisible">
-          <h5 class="card-title">{{ item.value }}</h5>
+    <div *ngFor="let item of users" class="text-center d-flex flex-column align-items-center">
+      <div class="card border-5" style="height: 90px; width: 70px;" [ngClass]="!isVisible && !item.selected ? 'bg-light' : 'bg-dark'">
+        <div class="card-body d-flex justify-content-around">
+          <img src="./assets/poker-logo-preto.png" alt="?" *ngIf="!isVisible && !item.selected" style="height: 40px; width: 40px;">
+          <img src="./assets/poker-logo-branco.png" alt="?" *ngIf="!isVisible && item.selected" style="height: 40px; width: 40px;">
+          <h4 class="card-title text-light" *ngIf="isVisible">{{ item.value }}</h4>
         </div>
       </div>
       {{ item.name }}
     </div>
   </div>
 </div>
+
 <nav class="navbar fixed-bottom navbar-light bg-light">
   <div class="container d-flex justify-content-center align-items-end">
     <button class="btn btn-outline-success rounded-circle mx-1" (click)="show()"><i class="far fa-eye"></i></button>
     <button class="btn btn-outline-success rounded-circle mx-1" (click)="reset()"><i class="fas fa-redo"></i></button>
   </div>
-  <div class="container d-flex justify-content-around">
-    <div *ngFor="let point of points" class="card" (click)="sendValue(point)">
+  <div class="container text-center d-flex justify-content-around">
+    <div *ngFor="let point of points" class="card border-5" (click)="sendValue(point)" style="height: 90px; width: 70px;" [ngClass]="point.selected ? 'bg-dark text-light' : 'bg-light text-dark'">
       <div class="card-body">
-        <h5 class="card-title">{{ point }}</h5>
+        <h4 class="card-title">{{ point.value }}</h4>
       </div>
     </div>
   </div>
 </nav>
+
+<ng-template #content let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Editar nome</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <input class="form-control" type="text" [(ngModel)]="nameEdited">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success" (click)="modal.close()" (click)="editName()">Salvar</button>
+    </div>
+  </div>
+</ng-template>
